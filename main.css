@@ -1,0 +1,434 @@
+:root {
+  --font-weight: 700;
+  --animation-name: scroll;
+  --animation-timing-function: linear;
+  --animation-delay: 5s;
+  --animation-fill-mode: forwards;
+  /* Fix the calculation - the total distance is 270% (from 100% to -170%) */
+  /* default scrolling speed (units: arbitrary, higher = faster) */
+  --scroll-speed: 1.75;
+  --animation-duration: calc(270 / var(--scroll-speed) * 1s);
+  --form-text-colour: rgba(255, 255, 255, 0.9);
+}
+
+body,
+html {
+  font-size: var(--font-size);
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents scrollbars */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--background-colour);
+}
+
+.alert {
+  color: var(--font-colour-secondary);
+  font-size: 13px;
+  margin-bottom: 12px;
+  display: none;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+#video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(50%);
+  z-index: 0;
+}
+
+.bear-wars-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(40%);
+  z-index: 0;
+}
+
+.container {
+  /* Portrait viewport box: 9:16 aspect ratio, 95% of viewport height */
+  height: 95vh;
+  aspect-ratio: 9 / 16; /* width will be computed from height */
+  max-width: 95vw;
+  min-width: 320px;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  text-transform: uppercase;
+  color: var(--font-colour);
+  overflow: hidden;
+  z-index: 1; /* Ensures content stays on top */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  background: transparent;
+}
+
+/* Prevent animations from starting until form is submitted */
+.intro-text {
+  font-size: 1.55rem;
+  text-transform: lowercase;
+  min-width: 330px;
+  font-weight: var(--font-weight);
+  color: var(--font-colour);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 1;
+  text-align: center;
+  /* Animations will be added via JavaScript after form submission */
+}
+
+/* Only start animations after form submission */
+body.animation-started .intro-text {
+  -webkit-animation: intro var(--animation-delay) ease-out;
+  -moz-animation: intro var(--animation-delay) ease-out;
+  -ms-animation: intro var(--animation-delay) ease-out;
+  -o-animation: intro var(--animation-delay) ease-out;
+  animation: intro var(--animation-delay) ease-out;
+}
+
+.section--body {
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  height: 250%;
+  bottom: 0;
+  font-weight: bold;
+  text-align: center;
+  overflow: hidden;
+  transform-origin: 50% 87%; /* Changed from 70% to 100% to improve perspective */
+  transform: perspective(600px) rotateX(50deg); /* Increased perspective value */
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+.section--body:after {
+  position: absolute;
+  content: " ";
+  top: 0;
+  bottom: 60%;
+  /* background-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 100%); */
+  pointer-events: none;
+  width: 100%;
+  left: 0;
+}
+
+.section--body__animation {
+  position: absolute;
+  top: 100%;
+  width: 60%; /* Further reduced from 70% to 60% */
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  margin: 0 auto;
+  word-wrap: break-word; /* Ensure long words break properly */
+  /* Animations will be controlled by JavaScript */
+}
+
+/* Only start scroll animation after form submission */
+body.animation-started .section--body__animation {
+  animation-name: var(--animation-name);
+  animation-delay: var(--animation-delay);
+  animation-timing-function: var(--animation-timing-function);
+  animation-duration: var(--animation-duration);
+  animation-fill-mode: var(--animation-fill-mode);
+}
+
+.section--body__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4rem;
+
+  p.main {
+    font-size: 1.3rem;
+  }
+
+  .subtitle p {
+    hyphens: none;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+}
+
+hr {
+  margin: 3rem auto;
+  max-width: 20px;
+  opacity: 0.2;
+}
+
+.main-logo {
+  position: absolute;
+  top: 40%;
+  opacity: 0;
+  z-index: 1;
+  /* Animations will be controlled by JavaScript */
+
+  img {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* Only start logo animation after form submission */
+body.animation-started .main-logo {
+  -webkit-animation: logo 10s ease-out var(--animation-delay);
+  -moz-animation: logo 10s ease-out var(--animation-delay);
+  -ms-animation: logo 10s ease-out var(--animation-delay);
+  -o-animation: logo 10s ease-out var(--animation-delay);
+  animation: logo 10s ease-out var(--animation-delay);
+}
+
+.section--body__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4rem;
+
+    &.section--body__content--hashtags {
+      gap: 1rem;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+    }
+  }
+
+  .section--body__content--hashtags {
+    font-size: 0.8em;
+  }
+
+  hr {
+    width: 100%; /** Since it's in a flex container, it needs to take the full width */
+    margin: 0 auto;
+  }
+}
+
+/* Animation Keyframes */
+@-webkit-keyframes intro {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes intro {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-ms-keyframes intro {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes intro {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes intro {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes logo {
+  0% {
+    -webkit-transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(0.1);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes logo {
+  0% {
+    -moz-transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -moz-transform: scale(0.1);
+    opacity: 0;
+  }
+}
+
+@-ms-keyframes logo {
+  0% {
+    -ms-transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -ms-transform: scale(0.1);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes logo {
+  0% {
+    -o-transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -o-transform: scale(0.1);
+    opacity: 0;
+  }
+}
+
+@keyframes logo {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: -170%;
+  }
+}
+
+/* Button row used in the form: start button grows, cog button sits to the right */
+.button-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.button-row .submit-btn {
+  flex: 1 1 auto;
+  width: auto; /* allow flex sizing instead of fixed 100% from form.css */
+}
+
+.config-btn {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--primary-colour);
+  border: 2px solid var(--primary-colour);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.config-btn:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.edit-config-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.edit-month-config {
+  color: var(--form-text-colour);
+}
+
+.edit-month-config__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.summary-label {
+  cursor: pointer;
+  font-weight: bold;
+}

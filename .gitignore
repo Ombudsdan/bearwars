@@ -1,0 +1,15 @@
+node_modules/
+tmp_uploads/
+backgrounds/
+music/
+# Exclude media files
+*.mp4
+*.mp3
+*.jpg
+
+# Exclude other common files
+node_modules/
+.DS_Store
+.env
+*.log
+```

@@ -1,0 +1,28 @@
+:root {
+  --colour-white: #ffffff;
+  --colour-yellow: #ebd71c;
+  --font-family: "Droid Sans", arial, verdana, sans-serif;
+  --font-size: 16px;
+  --font-weight: 700;
+  --font-colour: var(--colour-yellow, #000);
+  --font-colour-secondary: rgba(235, 215, 28, 0.7);
+  --primary-colour: #ebd71c;
+  --background-colour: #000;
+  --form-bg: rgba(0, 0, 0, 0.9);
+  --input-bg: #111;
+  --input-border: #444;
+  --body-background: black;
+}
+
+/*
+  Text colour variants.
+  Extensible: add a new --font-colour-<name> variable and a matching
+  .text-colour--<name> class that sets --font-colour accordingly.
+*/
+.text-colour--white {
+  --font-colour: var(--colour-white);
+}
+
+.text-colour--yellow {
+  --font-colour: var(--colour-yellow);
+}

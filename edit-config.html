@@ -1,0 +1,984 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Edit Month Config</title>
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./form.css" />
+    <link rel="stylesheet" href="./edit-config.css" />
+  </head>
+  <body>
+    <div style="display: flex; align-items: center; gap: 12px">
+      <a href="/main.html" id="back-home" style="text-decoration: none">
+        <button class="secondary" style="margin-right: 8px">
+          ◀ Back to Home
+        </button>
+      </a>
+      <h1 style="margin: 0">Bear Wars Config</h1>
+    </div>
+
+    <div id="upload-status" style="margin-top: 10px; color: green"></div>
+
+    <div class="form-container config-details-container" id="config-form-panel">
+      <h2 id="form-title">Config Details</h2>
+
+      <div class="form-group" style="display: flex; gap: 12px">
+        <div style="flex: 1">
+          <label for="field-year">Year</label>
+          <p class="hint">Four-digit year</p>
+          <input id="field-year" placeholder="e.g. 2025" style="width: 100%" />
+        </div>
+        <div style="flex: 1">
+          <label for="field-month">Display Month</label>
+          <p class="hint">Select the month for this configuration</p>
+          <select id="field-month" style="width: 100%">
+            <option value="">-- Select Month --</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="field-theme">Theme Text</label>
+        <p class="hint">Enter the theme text for this month</p>
+        <input id="field-theme" placeholder="theme text" style="width: 100%" />
+      </div>
+
+      <div class="form-group"></div>
+
+      <div class="form-group" style="display: flex; gap: 12px">
+        <div style="flex: 1">
+          <label for="field-emojis">Emojis</label>
+          <p class="hint">Enter emojis for the theme</p>
+          <input id="field-emojis" placeholder="emojis" style="width: 100%" />
+        </div>
+        <div style="flex: 1">
+          <label for="field-textColour">Text Colour</label>
+          <p class="hint">Optional: overrides the default intro text colour</p>
+          <select id="field-textColour" style="width: 100%">
+            <option value="">Select text colour</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="field-extraHashtags">Extra Hashtags</label>
+        <p class="hint">
+          Separate extra hashtags by commas (e.g.
+          <code>santaspeepers, bearparty</code>)
+        </p>
+        <input
+          id="field-extraHashtags"
+          placeholder="e.g. santaspeepers, bearparty"
+          style="width: 100%"
+        />
+      </div>
+
+      <div id="media-status-rows">
+        <div class="form-group">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin: 6px 0;
+            "
+          >
+            <div>
+              <strong>Background Image/Video</strong>
+              <span id="status-background">—</span>
+              <p class="hint" style="margin: 4px 0 0; font-size: 12px">
+                Sets the background image or video for this config
+              </p>
+            </div>
+            <div>
+              <button
+                class="secondary thin"
+                id="btn-toggle-upload-background"
+                aria-label="Upload Background Image or Video"
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin: 6px 0;
+            "
+          >
+            <div>
+              <strong>Background Music</strong> <span id="status-music">—</span>
+              <p class="hint" style="margin: 4px 0 0; font-size: 12px">
+                Sets the background music for this config
+              </p>
+            </div>
+            <div>
+              <button
+                class="secondary thin"
+                id="btn-toggle-upload-music"
+                aria-label="Upload Background Music"
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 12px">
+        <button id="form-create" style="display: none">Create</button>
+        <button id="form-save" style="display: none">Save Changes</button>
+        <button id="form-cancel" class="secondary" style="display: none">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <div class="form-container edit-month-config-section">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <h2>Configs</h2>
+        <button id="add-new-config">Add New Config</button>
+      </div>
+      <p class="hint">Click an item to view details. Use Edit to modify.</p>
+      <div
+        id="summary-list"
+        style="
+          margin-top: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        "
+      ></div>
+    </div>
+    <div class="form-container upload-media-section" style="display: none">
+      <h2>Upload Background</h2>
+      <div class="form-group">
+        <label for="background-file"> Background Image/Video File </label>
+        <p class="hint">
+          Upload an image or video file to be used as the background.
+        </p>
+        <input type="file" id="background-file" accept="image/*,video/*" />
+      </div>
+      <!-- Upload targets the config currently being edited; no select needed -->
+      <div style="display: flex; gap: 8px; margin-top: 8px">
+        <button id="upload-background" class="thin-btn">Upload</button>
+        <button id="cancel-upload-background" class="secondary">Cancel</button>
+      </div>
+    </div>
+
+    <div class="form-container upload-music-section" style="display: none">
+      <h2>Upload Background Music</h2>
+      <div class="form-group">
+        <label for="music-file">Background Music File</label>
+        <p class="hint">
+          Upload a music file to be used as background music. Prefer .mp3.
+        </p>
+        <input type="file" id="music-file" accept="audio/*" />
+      </div>
+      <!-- Upload targets the config currently being edited; no select needed -->
+      <div style="display: flex; gap: 8px; margin-top: 8px">
+        <button id="upload-music" class="thin-btn">Upload</button>
+        <button id="cancel-upload-music" class="secondary">Cancel</button>
+      </div>
+    </div>
+
+    <div class="form-container upload-logo-section" style="display: none">
+      <h2>Upload Logo</h2>
+      <div class="form-group">
+        <label for="logo-file">Logo File</label>
+        <p class="hint">
+          Upload a logo file to be used in the video. Must be .png.
+        </p>
+        <input type="file" id="logo-file" accept=".png" />
+      </div>
+      <div class="form-group">
+        <label for="logo-variant">Logo Variant</label>
+        <p class="hint">
+          Specify a variant name for this logo (e.g. dark, light)
+        </p>
+        <input id="logo-variant" placeholder="e.g. dark, light" />
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 8px">
+        <button id="upload-logo" class="thin-btn">Upload Logo</button>
+        <button id="cancel-upload-logo" class="secondary">Cancel</button>
+      </div>
+    </div>
+
+    <script type="module">
+      import COLOUR_VARIANTS from "./constants/colour-variants.constants.js";
+
+      // Lightweight client logic for the new summary-list + form UX
+      let runtimeConfig = null;
+      let editMode = null; // 'create' or 'edit'
+      let editingKey = null;
+      let currentUploadKey = null; // key selected when opening an upload panel
+
+      function textColourValueFromConfig(raw) {
+        const s = (raw ?? "").toString().trim();
+        if (!s) return "";
+        // New format: key of COLOUR_VARIANTS (e.g. "WHITE")
+        if (Object.prototype.hasOwnProperty.call(COLOUR_VARIANTS, s))
+          return COLOUR_VARIANTS[s];
+        // Back-compat: previously stored as the value (e.g. "white")
+        return s.toLowerCase();
+      }
+
+      function textColourKeyFromConfig(raw) {
+        const s = (raw ?? "").toString().trim();
+        if (!s) return "";
+        if (Object.prototype.hasOwnProperty.call(COLOUR_VARIANTS, s)) return s;
+        const desired = s.toLowerCase();
+        const hit = Object.entries(COLOUR_VARIANTS).find(
+          ([, v]) => (v ?? "").toString().toLowerCase() === desired
+        );
+        return hit ? hit[0] : "";
+      }
+
+      function populateTextColourSelect() {
+        const sel = document.getElementById("field-textColour");
+        if (!sel) return;
+
+        const previousValue = sel.value;
+
+        sel.innerHTML = "";
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = "Select text colour";
+        sel.appendChild(placeholder);
+
+        for (const [key, label] of Object.entries(COLOUR_VARIANTS)) {
+          const o = document.createElement("option");
+          o.value = key;
+          o.textContent = label;
+          sel.appendChild(o);
+        }
+
+        if (
+          previousValue &&
+          Array.from(sel.options).some((o) => o.value === previousValue)
+        ) {
+          sel.value = previousValue;
+        }
+      }
+
+      async function loadConfig() {
+        const res = await fetch("/api/config");
+        if (!res.ok) return alert("Failed to load config");
+        runtimeConfig = await res.json();
+        renderAll();
+      }
+
+      // Refresh config without switching to the list view (preserve edit panel)
+      async function refreshConfigSilent() {
+        try {
+          const res = await fetch("/api/config");
+          if (!res.ok) return;
+          runtimeConfig = await res.json();
+          // refresh summary list and selects but do not call showListView()
+          renderSummaryList();
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      function renderAll() {
+        populateTextColourSelect();
+        renderSummaryList();
+        showListView();
+      }
+
+      function renderSummaryList() {
+        const list = document.getElementById("summary-list");
+        list.innerHTML = "";
+        const monthConfig = runtimeConfig || {};
+        Object.keys(monthConfig).forEach((k, i) => {
+          const config = monthConfig[k] || {};
+          const item = document.createElement("div");
+          item.className = "summary-item";
+          const title = document.createElement("div");
+          title.style.display = "flex";
+          title.style.justifyContent = "space-between";
+          title.style.alignItems = "center";
+
+          const label = document.createElement("div");
+          label.style.cursor = "pointer";
+          label.style.fontWeight = "bold";
+          const monthLabel = config.month || k;
+          const year = k.split("-")[0] || "";
+          label.textContent = `${monthLabel} ${year}`;
+
+          const actions = document.createElement("div");
+
+          const editBtn = document.createElement("button");
+          editBtn.className = "secondary";
+          editBtn.textContent = "Edit";
+          editBtn.ariaLabel = `Edit config for ${monthLabel} ${year}`;
+          editBtn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            showFormForKey(k);
+          });
+
+          actions.appendChild(editBtn);
+          title.appendChild(label);
+          title.appendChild(actions);
+          item.appendChild(title);
+
+          if (i < Object.keys(monthConfig).length - 1) {
+            const hr = document.createElement("hr");
+            hr.style.margin = "8px 0 2px";
+            item.appendChild(hr);
+          }
+
+          const details = document.createElement("div");
+          details.className = "summary-details";
+          details.style.display = "none";
+          details.style.marginTop = "8px";
+
+          const rows = [
+            ["Month", config.month],
+            ["Theme", config.theme],
+            ["Emojis", config.emojis],
+            [
+              "Extra Hashtags",
+              Array.isArray(config.extraHashtags)
+                ? config.extraHashtags.join(", ")
+                : config.extraHashtags || "",
+            ],
+            ["Background Type", config.backgroundType],
+            ["Text Colour", textColourValueFromConfig(config.textColour)],
+          ];
+
+          rows
+            .filter(
+              ([labelText, value]) =>
+                value !== undefined &&
+                value !== null &&
+                value !== "" &&
+                value.length > 0
+            )
+            .forEach(([labelText, value]) => {
+              const r = document.createElement("div");
+              r.style.display = "flex";
+              r.style.justifyContent = "space-between";
+              r.style.padding = "2px 0";
+              const kEl = document.createElement("div");
+              kEl.textContent = labelText;
+              const vEl = document.createElement("div");
+              vEl.textContent = value;
+              r.appendChild(kEl);
+              r.appendChild(vEl);
+              details.appendChild(r);
+            });
+          item.appendChild(details);
+
+          title.addEventListener("click", () => {
+            details.style.display =
+              details.style.display === "none" ? "block" : "none";
+          });
+
+          list.appendChild(item);
+        });
+      }
+
+      function showListView() {
+        const configDetailsContainer =
+          document.querySelector("#config-form-panel");
+        configDetailsContainer.style.display = "none";
+        // show the summary list again
+        const summary = document.querySelector(".edit-month-config-section");
+        if (summary) summary.style.display = "block";
+        // hide form controls
+        editMode = null;
+        editingKey = null;
+        // (no explicit config-key field in this form)
+        document.getElementById("field-month").value = "";
+        document.getElementById("field-theme").value = "";
+        document.getElementById("field-emojis").value = "";
+        document.getElementById("field-textColour").value = "";
+        document.getElementById("form-create").style.display = "none";
+        document.getElementById("form-save").style.display = "none";
+        document.getElementById("form-cancel").style.display = "none";
+        document.getElementById("form-title").textContent = "Config Details";
+      }
+
+      function showFormForKey(key) {
+        editMode = "edit";
+        editingKey = key;
+        const configDetailsContainer =
+          document.querySelector("#config-form-panel");
+        configDetailsContainer.style.display = "block";
+        // hide the summary list while editing
+        const summary = document.querySelector(".edit-month-config-section");
+        if (summary) summary.style.display = "none";
+        configDetailsContainer.scrollIntoView({
+          behavior: "smooth",
+        });
+        const config = (runtimeConfig && runtimeConfig[key]) || {};
+        // set month/year fields from key
+        const parts = key.split("-");
+        const year = parts[0];
+        const monthNum = parts[1];
+        document.getElementById("field-year").value = year;
+        // convert monthNum to month name
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        const mIndex = parseInt(monthNum, 10) - 1;
+        document.getElementById("field-month").value = monthNames[mIndex] || "";
+        document.getElementById("field-month").value = config.month || "";
+        document.getElementById("field-theme").value = config.theme || "";
+        document.getElementById("field-emojis").value = config.emojis || "";
+        document.getElementById("field-textColour").value =
+          textColourKeyFromConfig(config.textColour) || "";
+        document.getElementById("field-extraHashtags").value =
+          config.extraHashtags && Array.isArray(config.extraHashtags)
+            ? config.extraHashtags.join(", ")
+            : "";
+        document.getElementById("form-create").style.display = "none";
+        document.getElementById("form-save").style.display = "inline-block";
+        document.getElementById("form-cancel").style.display = "inline-block";
+        document.getElementById("form-title").textContent =
+          `Editing Config for ${document.getElementById("field-month").value} ${year}`;
+        // update media indicators for this key
+        updateMediaStatusesForKey(key);
+        // make year/month readonly while editing
+        try {
+          const y = document.getElementById("field-year");
+          const m = document.getElementById("field-month");
+          if (y) y.readOnly = true;
+          if (m) m.disabled = true;
+        } catch (e) {}
+      }
+
+      function showCreateForm() {
+        editMode = "create";
+        editingKey = null;
+        const configDetailsContainer =
+          document.querySelector("#config-form-panel");
+        configDetailsContainer.style.display = "block";
+        // hide summary list while creating
+        const summary = document.querySelector(".edit-month-config-section");
+        if (summary) summary.style.display = "none";
+        configDetailsContainer.scrollIntoView({
+          behavior: "smooth",
+        });
+        document.getElementById("field-year").value = "";
+        document.getElementById("field-month").value = "";
+        document.getElementById("field-theme").value = "";
+        document.getElementById("field-emojis").value = "";
+        document.getElementById("field-textColour").value = "";
+        document.getElementById("field-extraHashtags").value = "";
+        document.getElementById("form-create").style.display = "inline-block";
+        document.getElementById("form-save").style.display = "none";
+        document.getElementById("form-cancel").style.display = "inline-block";
+        document.getElementById("form-title").textContent = "Create New Config";
+        // On create, show background/music as not present until uploaded
+        try {
+          const bg = document.getElementById("status-background");
+          const mu = document.getElementById("status-music");
+          if (bg) bg.textContent = "✕";
+          if (mu) mu.textContent = "✕";
+        } catch (e) {}
+        // ensure year/month are editable in create mode
+        try {
+          const y = document.getElementById("field-year");
+          const m = document.getElementById("field-month");
+          if (y) y.readOnly = false;
+          if (m) m.disabled = false;
+        } catch (e) {}
+      }
+
+      async function createConfig() {
+        const monthName = document.getElementById("field-month").value;
+        const year = document.getElementById("field-year").value.trim();
+        if (!monthName) return alert("Select a month");
+        if (!/^[0-9]{4}$/.test(year))
+          return alert("Enter a valid 4-digit year");
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        const monthIndex = monthNames.indexOf(monthName);
+        if (monthIndex === -1) return alert("Invalid month selected");
+        const mm = String(monthIndex + 1).padStart(2, "0");
+        const key = `${year}-${mm}`;
+        runtimeConfig = runtimeConfig || {};
+        if (runtimeConfig[key])
+          return alert("Config for this month already exists");
+        runtimeConfig[key] = {
+          month: monthName,
+          theme: document.getElementById("field-theme").value,
+          emojis: document.getElementById("field-emojis").value,
+        };
+
+        // Optional text colour variant
+        try {
+          const tc = (
+            document.getElementById("field-textColour").value || ""
+          ).trim();
+          if (tc) runtimeConfig[key].textColour = tc;
+        } catch (e) {}
+
+        // parse extra hashtags (comma separated) into an array
+        try {
+          const raw =
+            document.getElementById("field-extraHashtags").value || "";
+          const arr = raw
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0);
+          if (arr.length) runtimeConfig[key].extraHashtags = arr;
+        } catch (e) {}
+        await saveConfigToServer();
+      }
+
+      async function saveChanges() {
+        const key = editingKey;
+        if (!key) return alert("No config selected");
+        runtimeConfig = runtimeConfig || {};
+        runtimeConfig[key] = runtimeConfig[key] || {};
+        runtimeConfig[key].month = document.getElementById("field-month").value;
+        runtimeConfig[key].theme = document.getElementById("field-theme").value;
+        runtimeConfig[key].emojis =
+          document.getElementById("field-emojis").value;
+
+        // Optional text colour variant
+        try {
+          const tc = (
+            document.getElementById("field-textColour").value || ""
+          ).trim();
+          if (tc) runtimeConfig[key].textColour = tc;
+          else delete runtimeConfig[key].textColour;
+        } catch (e) {}
+
+        // parse and update extraHashtags
+        try {
+          const raw =
+            document.getElementById("field-extraHashtags").value || "";
+          const arr = raw
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0);
+          if (arr.length) runtimeConfig[key].extraHashtags = arr;
+          else delete runtimeConfig[key].extraHashtags;
+        } catch (e) {}
+        // update media status indicators for this key
+        await updateMediaStatusesForKey(key);
+        await saveConfigToServer();
+      }
+
+      async function saveConfigToServer() {
+        try {
+          const res = await fetch("/api/config", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(runtimeConfig || {}),
+          });
+          if (!res.ok) throw new Error("Save failed");
+          await loadConfig();
+        } catch (e) {
+          alert("Failed to save: " + e);
+        } finally {
+          document.querySelector("#config-form-panel").style.display = "none";
+        }
+      }
+
+      // helper: check resource existence with HEAD then GET (range) fallback
+      async function resourceExists(url) {
+        try {
+          const h = await fetch(url, { method: "HEAD" });
+          if (h.ok) return true;
+        } catch (e) {}
+        try {
+          const g = await fetch(url, {
+            method: "GET",
+            headers: { Range: "bytes=0-0" },
+          });
+          return g.ok;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      async function updateMediaStatusesForKey(key) {
+        const config = (runtimeConfig && runtimeConfig[key]) || {};
+        const bgStatusEl = document.getElementById("status-background");
+        const musicStatusEl = document.getElementById("status-music");
+
+        // Always probe the filesystem for background image/video existence
+        let bgFound = false;
+        let bgIsVideo = false;
+        const tryExts = [".jpg", ".png", ".mp4", ".webm"];
+        for (const ext of tryExts) {
+          try {
+            const url = `/backgrounds/${key}${ext}`;
+            if (await resourceExists(url)) {
+              bgFound = true;
+              if (ext === ".mp4" || ext === ".webm") bgIsVideo = true;
+              break;
+            }
+          } catch (e) {}
+        }
+        if (bgFound) {
+          bgStatusEl.textContent = bgIsVideo ? "✓ video" : "✓ image";
+        } else {
+          bgStatusEl.textContent = "✕";
+        }
+
+        // Check music existence (primarily .mp3)
+        try {
+          const mExts = [".mp3", ".ogg", ".wav"];
+          let mFound = false;
+          for (const me of mExts) {
+            if (await resourceExists(`/music/${key}${me}`)) {
+              mFound = true;
+              break;
+            }
+          }
+          musicStatusEl.textContent = mFound ? "✓" : "✕";
+        } catch (e) {
+          musicStatusEl.textContent = "✕";
+        }
+      }
+      function cancelEdit() {
+        showListView();
+      }
+
+      // Toggle upload panels: show/hide and preselect config
+      async function showUploadPanel(type, key) {
+        const mapping = {
+          background: ".upload-media-section",
+          music: ".upload-music-section",
+          logo: ".upload-logo-section",
+        };
+        const sel = document.querySelector(mapping[type]);
+        if (!sel) return;
+        sel.style.display = "block";
+        // store the upload target key (prefer provided key, otherwise derive)
+        currentUploadKey = key || getTargetConfigKey();
+        // no selects for upload target; uploads use the currently edited config
+        // set upload button label depending on whether resource exists and we're editing
+        try {
+          if (type === "background") {
+            const btn = document.getElementById("upload-background");
+            let exists = false;
+            if (key && editMode === "edit") {
+              const tryExts = [".jpg", ".png", ".mp4", ".webm"];
+              for (const ext of tryExts) {
+                if (await resourceExists(`/backgrounds/${key}${ext}`)) {
+                  exists = true;
+                  break;
+                }
+              }
+            }
+            btn.textContent =
+              exists && editMode === "edit" ? "Replace" : "Upload";
+          }
+          if (type === "music") {
+            const btn = document.getElementById("upload-music");
+            let exists = false;
+            if (key && editMode === "edit") {
+              exists = await resourceExists(`/music/${key}.mp3`);
+            }
+            btn.textContent =
+              exists && editMode === "edit" ? "Replace" : "Upload";
+          }
+        } catch (e) {
+          // ignore and leave default labels
+        }
+
+        sel.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function hideUploadPanel(type) {
+        const mapping = {
+          background: ".upload-media-section",
+          music: ".upload-music-section",
+          logo: ".upload-logo-section",
+        };
+        const sel = document.querySelector(mapping[type]);
+        if (!sel) return;
+        sel.style.display = "none";
+        // clear current upload key when hiding panels
+        currentUploadKey = null;
+      }
+
+      // Upload handlers now require a selected config and will pass configKey to server
+      async function uploadBackground() {
+        const fileEl = document.getElementById("background-file");
+        if (!fileEl.files.length) return alert("Pick a background file");
+        const config = currentUploadKey || getTargetConfigKey();
+        if (!config)
+          return alert("Open or create a config first (set Year and Month)");
+        const form = new FormData();
+        form.append("file", fileEl.files[0]);
+        form.append("type", "background");
+        form.append("configKey", config);
+        await triggerUpload(form);
+        // after upload, re-check media status for this key
+        await updateMediaStatusesForKey(config);
+      }
+
+      async function uploadMusic() {
+        const fileEl = document.getElementById("music-file");
+        if (!fileEl.files.length) return alert("Pick a music file");
+        const config = currentUploadKey || getTargetConfigKey();
+        if (!config)
+          return alert("Open or create a config first (set Year and Month)");
+        const form = new FormData();
+        form.append("file", fileEl.files[0]);
+        form.append("type", "music");
+        form.append("configKey", config);
+        console.log(
+          "Client: uploadMusic - configKey=",
+          config,
+          "currentUploadKey=",
+          currentUploadKey
+        );
+        await triggerUpload(form);
+        await updateMediaStatusesForKey(config);
+      }
+
+      async function uploadLogo() {
+        const fileEl = document.getElementById("logo-file");
+        if (!fileEl.files.length) return alert("Pick a logo file");
+        const variantEl = document.getElementById("logo-variant");
+        const variant = variantEl ? variantEl.value.trim() : "";
+        if (!variant) return alert("Enter a logo variant");
+        const form = new FormData();
+        form.append("file", fileEl.files[0]);
+        form.append("type", "logo");
+        form.append("variant", variant);
+        await triggerUpload(form);
+      }
+
+      function getTargetConfigKey() {
+        // prefer editingKey (when editing an existing config)
+        if (editingKey) return editingKey;
+        // otherwise derive from year + month fields (create mode)
+        const year = (document.getElementById("field-year") || {}).value || "";
+        const month =
+          (document.getElementById("field-month") || {}).value || "";
+        if (!/^[0-9]{4}$/.test(year)) return null;
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        const mi = monthNames.indexOf(month);
+        if (mi < 0) return null;
+        const mm = String(mi + 1).padStart(2, "0");
+        return `${year}-${mm}`;
+      }
+
+      async function triggerUpload(form) {
+        const res = await fetch("/api/upload", { method: "POST", body: form });
+        const data = await res.json();
+        if (!res.ok)
+          return alert("Upload failed: " + (data.error || res.status));
+        const status = document.getElementById("upload-status");
+        status.textContent = `Uploaded: ${data.path}`;
+        const preview = document.createElement("div");
+        preview.textContent = `Returned path: ${data.path}`;
+        status.appendChild(preview);
+        // refresh config silently so we don't close the edit panel
+        await refreshConfigSilent();
+
+        // hide the upload panel for the uploaded type and update media statuses
+        try {
+          const t = form.get("type");
+          if (t) hideUploadPanel(t);
+          const config = form.get("configKey") || getTargetConfigKey();
+          if (config) await updateMediaStatusesForKey(config);
+        } catch (e) {}
+      }
+
+      // Wire up UI
+      document
+        .getElementById("add-new-config")
+        .addEventListener("click", showCreateForm);
+      document
+        .getElementById("form-create")
+        .addEventListener("click", createConfig);
+      document
+        .getElementById("form-save")
+        .addEventListener("click", saveChanges);
+      document
+        .getElementById("form-cancel")
+        .addEventListener("click", cancelEdit);
+      document
+        .getElementById("upload-background")
+        .addEventListener("click", uploadBackground);
+      document
+        .getElementById("upload-music")
+        .addEventListener("click", uploadMusic);
+      document
+        .getElementById("upload-logo")
+        .addEventListener("click", uploadLogo);
+
+      // Toggle buttons in config form to show upload panels
+      document
+        .getElementById("btn-toggle-upload-background")
+        .addEventListener("click", () => {
+          const key =
+            editingKey ||
+            (document.getElementById("field-year").value &&
+              (() => {
+                const monthNames = [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December",
+                ];
+                const m = document.getElementById("field-month").value;
+                const yi = document.getElementById("field-year").value.trim();
+                const mi = monthNames.indexOf(m);
+                return yi && mi >= 0
+                  ? `${yi}-${String(mi + 1).padStart(2, "0")}`
+                  : null;
+              })()) ||
+            null;
+          if (!key) return alert("Open or create a config first to upload");
+          showUploadPanel("background", key);
+          // upload targets current config; no select to set
+        });
+      document
+        .getElementById("btn-toggle-upload-music")
+        .addEventListener("click", () => {
+          const key =
+            editingKey ||
+            (document.getElementById("field-year").value &&
+              (() => {
+                const monthNames = [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December",
+                ];
+                const m = document.getElementById("field-month").value;
+                const yi = document.getElementById("field-year").value.trim();
+                const mi = monthNames.indexOf(m);
+                return yi && mi >= 0
+                  ? `${yi}-${String(mi + 1).padStart(2, "0")}`
+                  : null;
+              })()) ||
+            null;
+          if (!key) return alert("Open or create a config first to upload");
+          showUploadPanel("music", key);
+          // upload targets current config; no select to set
+        });
+
+      // Cancel buttons for upload panels
+      document
+        .getElementById("cancel-upload-background")
+        .addEventListener("click", () => hideUploadPanel("background"));
+      document
+        .getElementById("cancel-upload-music")
+        .addEventListener("click", () => hideUploadPanel("music"));
+      document
+        .getElementById("cancel-upload-logo")
+        .addEventListener("click", () => hideUploadPanel("logo"));
+
+      loadConfig();
+      // Re-check media when year or month fields change (useful during create)
+      const yField = document.getElementById("field-year");
+      const mField = document.getElementById("field-month");
+      const recheck = () => {
+        const key = (function () {
+          const year = (yField || {}).value || "";
+          const month = (mField || {}).value || "";
+          if (!/^[0-9]{4}$/.test(year)) return null;
+          const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          const mi = monthNames.indexOf(month);
+          if (mi < 0) return null;
+          return `${year}-${String(mi + 1).padStart(2, "0")}`;
+        })();
+        if (key) updateMediaStatusesForKey(key);
+      };
+      if (yField) yField.addEventListener("change", recheck);
+      if (mField) mField.addEventListener("change", recheck);
+    </script>
+  </body>
+</html>

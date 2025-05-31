@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Bear Wars Monthly Editor</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" href="./form.css" />
+  </head>
+  <body>
+    <!-- ===== Editor Form ===== -->
+
+    <div class="editor-form" id="editorForm">
+      <div class="form-container">
+        <h1>Bear Wars Monthly Editor</h1>
+        <p style="color: #ccc; text-align: center; margin-bottom: 30px">
+          Complete the form below to generate a Bear Wars intro
+        </p>
+
+        <div class="form-group">
+          <label for="select-config">Select Config</label>
+          <select
+            id="select-config"
+            style="width: 100%; margin-bottom: 8px"
+          ></select>
+          <div id="config-alert" class="alert"></div>
+
+          <label for="monthly-text">Monthly Message:</label>
+          <textarea
+            id="monthly-text"
+            placeholder="Enter your monthly message here. Use double line breaks to separate paragraph groups, single line breaks for new lines within a paragraph."
+            required
+          ></textarea>
+          <small
+            >Tip: Double line break = new paragraph group, Single line break =
+            new line in same paragraph</small
+          >
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="submit-btn">Start Intro</button>
+          <button
+            type="button"
+            id="open-editor-btn"
+            class="config-btn"
+            title="Open Editor"
+          >
+            ⚙
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== End: Editor Form ===== -->
+
+    <!-- ===== Bear Wars Content ===== -->
+
+    <div class="container bear-wars-content" id="bearWarsContent">
+      <audio id="background-music" loop style="display: none">
+        <!-- Will be populated by new ScrollingText().init() > applyBackgroundMusic() -->
+        <source type="audio/mpeg" />
+      </audio>
+
+      <video
+        autoplay
+        muted
+        loop
+        id="video-background"
+        class="bear-wars-background"
+        style="display: none"
+      >
+        <!-- Will be populated by new ScrollingText().init() > applyBackgroundVideo() or applyImageBackground() -->
+        <source type="video/mp4" />
+      </video>
+
+      <div
+        id="image-background"
+        class="bear-wars-background"
+        style="display: none"
+      ></div>
+
+      <p class="intro-text">A short time ago, in a Galaxy not so far away…</p>
+
+      <div class="main-logo">
+        <!-- Will be populated by new ScrollingText().init() > applyMainLogo() -->
+        <img id="main-logo-image" />
+      </div>
+
+      <div class="section--body">
+        <div class="section--body__animation">
+          <div class="section--body__title">
+            <p class="main">Remembering Bear and His Mummy</p>
+            <div class="subtitle">
+              <p>Mission</p>
+              <p id="theme-text"></p>
+              <p id="emoji-text"></p>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="section--body__content">
+            <div class="section--body__content--month-message">
+              <!-- Will be populated by new IntroForm().init() > setMainSection() -->
+            </div>
+
+            <hr />
+
+            <div class="section--body__content--common-message">
+              <p>
+                Helen and her companion, Bear, original custodians of ‘The
+                Googly Eyes’ have handed over the guardianship of the 👀 to you
+                🫵
+              </p>
+              <p>Yes YOU!</p>
+              <p>Everyplushie/pawdy,</p>
+              <p>
+                Your mission is to continue this legacy of artful, and more
+                imPAWtantly, funny Googly-Eye Placement across the length and
+                breadth of our planet.
+              </p>
+              <p>Do you accept the CHALLENGE?!</p>
+              <p>Remember, Helen and Bear will be watching 👀 👀 👀</p>
+            </div>
+
+            <div class="section--body__content--hashtags">
+              <!-- Will be populated by new IntroForm().init() > setHashtags() -->
+            </div>
+
+            <div class="section--body__content--instructions">
+              <p>See @bed.ted’s pinned post for full details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== End: Bear Wars Content ===== -->
+
+    <script type="module" src="./main.js"></script>
+
+    <script>
+      // Open the edit-config page when cog clicked
+      document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("open-editor-btn");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+          // Open editor in a new tab so the current page remains available
+          window.open("/edit-config.html", "_blank");
+        });
+      });
+    </script>
+  </body>
+</html>
