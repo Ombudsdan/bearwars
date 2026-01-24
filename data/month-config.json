@@ -22,5 +22,11 @@
     "theme": "Plushie Pirate Party",
     "emojis": "🦜 🏴‍☠️ ⚓ ⛵ 🌊",
     "backgroundType": "video"
+  },
+  "2025-10": {
+    "month": "October",
+    "theme": "Fall Into EYE Contact",
+    "emojis": "🍁 🎃 👀 🦇 🍂",
+    "backgroundType": "video"
   }
 }
