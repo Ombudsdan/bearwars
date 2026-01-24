@@ -34,5 +34,12 @@
     "theme": "MOVEMBER",
     "emojis": "🥸 🧔 🎩 👓 🥸",
     "backgroundType": "image"
+  },
+  "2025-12": {
+    "month": "December",
+    "theme": "Santa's Peepers",
+    "emojis": "🎄 ❄️ 🎅 🎁 ⛄",
+    "backgroundType": "image",
+    "extraHashtags": ["santaspeepers"]
   }
 }
