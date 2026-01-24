@@ -47,5 +47,12 @@
     "theme": "One Vision",
     "emojis": "🌟 🥂 👀 🎇 🎊",
     "backgroundType": "image"
+  },
+  "2026-02": {
+    "month": "February",
+    "theme": "Love At First Sight",
+    "emojis": "",
+    "backgroundType": "video",
+    "textColour": "WHITE"
   }
 }
