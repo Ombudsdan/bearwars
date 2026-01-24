@@ -1,10 +1,8 @@
 {
-  "monthConfig": {
-    "2000-01": {
-      "month": "",
-      "theme": "",
-      "emojis": "",
-      "backgroundType": ""
-    }
+  "2025-06": {
+    "month": "June",
+    "theme": "In THE SUMMERTIME",
+    "emojis": "☀️ 🩴 🪣 🦀 🏖️ 🌊",
+    "backgroundType": "video"
   }
 }
