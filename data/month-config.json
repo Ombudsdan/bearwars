@@ -16,5 +16,11 @@
     "theme": "Back to School Stares",
     "emojis": "✏️ 📚 💼 📐 🖍️ 📝",
     "backgroundType": "image"
+  },
+  "2025-09": {
+    "month": "September",
+    "theme": "Plushie Pirate Party",
+    "emojis": "🦜 🏴‍☠️ ⚓ ⛵ 🌊",
+    "backgroundType": "video"
   }
 }
