@@ -10,5 +10,11 @@
     "theme": "Stars & Googly Str-eye-ps",
     "emojis": "🎉 🥁 🪈 🍔 🥒 🩲",
     "backgroundType": "video"
+  },
+  "2025-08": {
+    "month": "August",
+    "theme": "Back to School Stares",
+    "emojis": "✏️ 📚 💼 📐 🖍️ 📝",
+    "backgroundType": "image"
   }
 }
