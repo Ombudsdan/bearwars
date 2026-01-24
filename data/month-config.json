@@ -28,5 +28,11 @@
     "theme": "Fall Into EYE Contact",
     "emojis": "🍁 🎃 👀 🦇 🍂",
     "backgroundType": "video"
+  },
+  "2025-11": {
+    "month": "November",
+    "theme": "MOVEMBER",
+    "emojis": "🥸 🧔 🎩 👓 🥸",
+    "backgroundType": "image"
   }
 }
