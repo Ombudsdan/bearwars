@@ -41,5 +41,11 @@
     "emojis": "🎄 ❄️ 🎅 🎁 ⛄",
     "backgroundType": "image",
     "extraHashtags": ["santaspeepers"]
+  },
+  "2026-01": {
+    "month": "January",
+    "theme": "One Vision",
+    "emojis": "🌟 🥂 👀 🎇 🎊",
+    "backgroundType": "image"
   }
 }
