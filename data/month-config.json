@@ -61,5 +61,11 @@
     "emojis": "",
     "backgroundType": "video",
     "textColour": "WHITE"
+  },
+  "2026-04": {
+    "month": "April",
+    "theme": "APRIL FOOLS PRANKS",
+    "emojis": "",
+    "backgroundType": "video"
   }
 }
