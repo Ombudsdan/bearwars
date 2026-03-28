@@ -6,7 +6,7 @@
   --animation-fill-mode: forwards;
   /* Fix the calculation - the total distance is 270% (from 100% to -170%) */
   /* default scrolling speed (units: arbitrary, higher = faster) */
-  --scroll-speed: 1.75;
+  --scroll-speed: 1.5;
   --animation-duration: calc(270 / var(--scroll-speed) * 1s);
   --form-text-colour: rgba(255, 255, 255, 0.9);
 }

@@ -97,9 +97,3 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 });
-
-/**
- * Attach click handler to the submit button defined in SELECTORS.
- * When clicked, it initialises the intro form process.
- */
-// (submit handler moved into DOMContentLoaded after fetching runtime config)
