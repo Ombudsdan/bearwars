@@ -67,5 +67,12 @@
     "theme": "APRIL FOOLS PRANKS",
     "emojis": "",
     "backgroundType": "video"
+  },
+  "2026-05": {
+    "month": "May",
+    "theme": "Blooming Eyes!",
+    "emojis": "",
+    "textColour": "WHITE",
+    "backgroundType": "video"
   }
 }
